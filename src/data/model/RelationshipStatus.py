@@ -1,0 +1,2 @@
+class RelationshipStatus:
+    pass
