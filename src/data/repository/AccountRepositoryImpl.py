@@ -1,7 +1,11 @@
+from data.dto.request.AccountRequest import AccountRequest
+from data.dto.response.AccountResponse import AccountResponse
 from data.model.Account import Account
 from data.model.User import User
 from data.model.personal_information import PersonalInformation
 from data.repository.AccountRepositoryInterface import AccountRepositoryInterface
+import random
+from data.model.Gender import Gender
 
 
 class AccountRepositoryImpl(AccountRepositoryInterface):
@@ -11,35 +15,67 @@ class AccountRepositoryImpl(AccountRepositoryInterface):
     personal_info = PersonalInformation()
     user = User()
 
-    def create_new_account(self, first_name, last_name, mobile_number, age, gender, realship, lga, state, email):
+    def create_new_account(self, account_request: AccountRequest) -> AccountResponse:
+        account_response = AccountResponse()
+
         self.account.set_id(self.account_id_count + 1)
-        self.personal_info.set_first_name(first_name)
-        self.personal_info.set_last_name(last_name)
-        self.personal_info.set_email_address(email)
-        self.personal_info.set_mobile_number(mobile_number)
-        self.personal_info.set_local_govt(lga)
-        self.personal_info.set_state_of_origin(state)
+        self.personal_info.set_first_name(account_request.set_first_name)
+        self.personal_info.set_last_name(account_request.set_last_name)
+        self.personal_info.set_email_address(account_request.set_email)
+        self.personal_info.set_mobile_number(account_request.set_mobile_number)
+        self.personal_info.set_local_govt(account_request.set_lga)
+        self.personal_info.set_state_of_origin(account_request.set_state)
         self.user.set_personal_info(self.personal_info)
+        self.user.get_personal_info().set_gender(Gender.FEMALE)
+        self.user.get_personal_info().get_gender()
         self.account.set_user(self.user)
+        self.account.set_account_name(self.user.get_personal_info().get_full_name())
+        self.account.set_account_number(self.account_number_generator())
 
-        self.account_data_base[self.account.get_id()] = self.account
-        return self.account_data_base
+        account_response.set_account_id(self.account.get_id())
+        account_response.set_full_name(self.personal_info.get_full_name())
+        account_response.set_gender(self.personal_info.get_gender())
+        account_response.set_email(self.personal_info.get_email_address())
+        account_response.set_mobile_number(self.personal_info.get_mobile_number())
+        account_response.set_state(self.personal_info.get_state_of_origin())
+        account_response.set_lga(self.personal_info.get_local_govt())
 
+        self.account_data_base[account_response.get_account_id()] = account_response
+        return account_response
 
-    def deposit(self, amount):
+    @staticmethod
+    def account_number_generator():
+        value = [str(random.randint(0, 9)) for _ in range(8)]
+        str_value = "02"
+        for i in value:
+            str_value = str_value + i
+        return str_value
+
+    def find_account_by_id(self, id):
+        return self.account_data_base.get(id)
+
+    def find_account_by_account_name(self, name):
         pass
 
-    def withdraw(self, amount, pin):
+    def delete_account_by_id(self, id):
         pass
 
-    def transfer(self, amount, account_name, account_number, bank_name, pin):
+    def delete_account_by_account_name(self, name):
         pass
 
-    def check_balance(self, account_number, pin):
+    def update_account_by_id(self, id):
+        pass
+
+    def update_account_by_name(self, name):
         pass
 
 
 if __name__ == '__main__':
-    acc_impl = AccountRepositoryImpl()
-    print(acc_impl.create_new_account("Elite", "C15", "09087654321", 56, "Female", "Single", "Eko", "Lagos", "examplemail@email.com"))
+    account_request = AccountRequest("Elite", "C15", "90908765432", 234, "She_Him", "Hooked", "Sabo Local Govt",
+                                     "Lagos State", "elite@examplemail.com")
 
+    acc_repo_impl = AccountRepositoryImpl()
+    account_response: AccountResponse() = acc_repo_impl.create_new_account(account_request)
+
+    value = acc_repo_impl.find_account_by_id(1)
+    print(value)

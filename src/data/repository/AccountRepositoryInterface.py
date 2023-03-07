@@ -1,23 +1,36 @@
 from abc import ABC, abstractmethod
 
+from data.dto.request.AccountRequest import AccountRequest
+from data.dto.response.AccountResponse import AccountResponse
+
 
 class AccountRepositoryInterface(ABC):
     @abstractmethod
-    def create_new_account(self, first_name, last_name, mobile_number, age, gender, realship, lga, state, email):
+    def create_new_account(self, account_request: AccountRequest) -> AccountResponse:
         pass
 
     @abstractmethod
-    def deposit(self, amount):
+    def find_account_by_id(self, id):
         pass
 
     @abstractmethod
-    def withdraw(self, amount, pin):
+    def find_account_by_account_name(self, name):
         pass
 
     @abstractmethod
-    def transfer(self, amount, account_name, account_number, bank_name, pin):
+    def delete_account_by_id(self, id):
         pass
 
     @abstractmethod
-    def check_balance(self, account_number, pin):
+    def delete_account_by_account_name(self, name):
         pass
+
+    @abstractmethod
+    def update_account_by_id(self, id):
+        pass
+
+    @abstractmethod
+    def update_account_by_name(self, name):
+        pass
+    
+    

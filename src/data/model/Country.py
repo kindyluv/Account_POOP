@@ -11,18 +11,6 @@ class Country(Enum):
     FINLAND = "358"
     ITALY = "39"
 
-    def __str__(self):
-        return f"""
-            {self.NIGERIA}
-            {self.GHANA}
-            {self.GERMANY}
-            {self.GEORGIA}
-            {self.SOUTH_AFRICA}
-            {self.FRANCE}
-            {self.FINLAND}
-            {self.ITALY}
-        """
-
     def __repr__(self):
         return f"""
             {self.NIGERIA}

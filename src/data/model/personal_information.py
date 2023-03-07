@@ -8,8 +8,8 @@ class PersonalInformation:
         self._person_id: int = 0
         self._first_name: str = ""
         self._last_name: str = ""
-        self._gender = Gender()
-        self._relationship_status = RelationshipStatus()
+        self._gender = Gender
+        self._relationship_status = RelationshipStatus
         self._mobile_number: str = ""
         self._country_code = Country
         self._local_government: str = ""
@@ -71,30 +71,36 @@ class PersonalInformation:
     def get_last_name(self) -> str:
         return self._last_name
 
+    def set_gender(self, gender) -> None:
+        self._gender = gender
+
+    def get_gender(self):
+        return self._gender
+
     def __str__(self):
         return f"""
-            person_id: {self._person_id}, 
-            first_name: {self._first_name}, 
-            last_name: {self._last_name}, 
-            Gender: {self._gender}, 
-            RelationshipStatus: {self._relationship_status}, 
-            mobile_number: {self._mobile_number}, 
-            Country: {self._country_code}, 
-            local_government: {self._local_government}, 
+            person_id: {self._person_id},
+            first_name: {self._first_name},
+            last_name: {self._last_name},
+            Gender: {self._gender},
+            RelationshipStatus: {self._relationship_status},
+            mobile_number: {self._mobile_number},
+            Country: {self._country_code},
+            local_government: {self._local_government},
             state_of_origin: {self._state_of_origin},
             email_address: {self._email_address}
         """
-
+    
     def __repr__(self):
         return f"""
-            person_id: {self._person_id}, 
-            first_name: {self._first_name}, 
-            last_name: {self._last_name}, 
-            Gender: {self._gender}, 
-            RelationshipStatus: {self._relationship_status}, 
-            mobile_number: {self._mobile_number}, 
-            Country: {self._country_code}, 
-            local_government: {self._local_government}, 
+            person_id: {self._person_id},
+            first_name: {self._first_name},
+            last_name: {self._last_name},
+            Gender: {self._gender},
+            RelationshipStatus: {self._relationship_status},
+            mobile_number: {self._mobile_number},
+            Country: {self._country_code},
+            local_government: {self._local_government},
             state_of_origin: {self._state_of_origin},
             email_address: {self._email_address}
         """
